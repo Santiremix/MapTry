@@ -18,11 +18,10 @@ const MapView = () => {
   </Marker>
 
   {data.map(place => {
-        <Marker 
-        position={[place.location.latitude, place.location.longitude]}
-        />
+        <Marker position={[place.location.latitude, place.location.longitude]}/>
         console.log(place.location)
     })}
+
 </MapContainer>
   )
 }
