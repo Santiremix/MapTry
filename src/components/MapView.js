@@ -3,7 +3,17 @@ import { MapContainer, TileLayer, useMap, Marker, MarkerProps, Popup } from 'rea
 import data from '../assets/data.json'
 
 const MapView = () => {
-    
+
+    const resp = data.map((place) => {
+        return (
+          <Marker position={[place.location.latitude, place.location.longitude]}>
+            <Popup>
+                <b>{place.name}</b> <br/><br/>
+                {place.description}
+            </Popup>
+          </Marker>
+        );
+      });
 
   return (
     <MapContainer center={[39.4730789903991, -0.37663455848786936]} zoom={13} scrollWheelZoom={true}>
@@ -17,10 +27,7 @@ const MapView = () => {
     </Popup>
   </Marker>
 
-  {data.map(place => {
-        <Marker position={[place.location.latitude, place.location.longitude]}/>
-        console.log(place.location)
-    })}
+  {resp}
 
 </MapContainer>
   )
