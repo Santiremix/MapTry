@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { MapContainer, TileLayer, useMap, Marker, MarkerProps, Popup } from 'react-leaflet'
 import data from '../assets/data.json'
 
@@ -15,6 +15,30 @@ const MapView = () => {
         );
       });
 
+      const [state, setState] = useState({
+        longitude: 0,
+        latitude: 0,
+    })
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                setState({
+                    longitude: position.coords.longitude,
+                    latitude: position.coords.latitude
+                    
+                })
+                console.log(state)
+            },
+            function(error) {
+                console.log(error)
+            },
+            { 
+                enableHighAccuracy: true
+            }
+        );
+    }, [])
+
   return (
     <MapContainer center={[39.4730789903991, -0.37663455848786936]} zoom={13} scrollWheelZoom={true}>
     <TileLayer
@@ -28,6 +52,12 @@ const MapView = () => {
   </Marker>
 
   {resp}
+
+  <Marker position={[state.latitude, state.longitude]} >
+    <Popup>
+      Estás Aquí
+    </Popup>
+  </Marker>
 
 </MapContainer>
   )
