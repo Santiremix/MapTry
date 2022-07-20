@@ -1,6 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import { MapContainer, TileLayer, useMap, Marker, MarkerProps, Popup } from 'react-leaflet'
+import L, { Icon } from 'leaflet'
 import data from '../assets/data.json'
+
+const greenIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
 
 const MapView = () => {
 
@@ -9,7 +19,7 @@ const MapView = () => {
           <Marker position={[place.location.latitude, place.location.longitude]}>
             <Popup>
                 <b>{place.name}</b> <br/><br/>
-                {place.description}
+                {place.description}  
             </Popup>
           </Marker>
         );
@@ -24,20 +34,19 @@ const MapView = () => {
         navigator.geolocation.getCurrentPosition(
             function(position) {
                 setState({
-                    longitude: position.coords.longitude,
-                    latitude: position.coords.latitude
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude
                     
                 })
-                console.log(state)
-            },
-            function(error) {
+              },
+              function(error) {
                 console.log(error)
-            },
-            { 
+              },
+              { 
                 enableHighAccuracy: true
-            }
-        );
-    }, [])
+              }
+              );
+            }, [])
 
   return (
     <MapContainer center={[39.4730789903991, -0.37663455848786936]} zoom={13} scrollWheelZoom={true}>
@@ -53,7 +62,7 @@ const MapView = () => {
 
   {resp}
 
-  <Marker position={[state.latitude, state.longitude]} >
+  <Marker position={[state.latitude, state.longitude]} icon={greenIcon}>
     <Popup>
       Estás Aquí
     </Popup>
